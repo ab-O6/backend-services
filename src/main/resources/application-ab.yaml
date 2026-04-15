@@ -1,0 +1,48 @@
+server:
+  compression:
+    enabled: false
+
+spring:
+  main:
+    lazy-initialization: false
+    allow-bean-definition-overriding: false
+  datasource:
+    url: jdbc:postgresql://192.168.64.10/backend_services_ab?sslmode=require&sslfactory=org.postgresql.ssl.NonValidatingFactory
+    username: backend_services_ab
+    password: backend_services_ab
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        '[format_sql]': false
+        '[generate_statistics]': false
+        '[jdbc.batch_size]': 32
+        '[order_inserts]': true
+        '[order_updates]': true
+  jackson:
+    default-property-inclusion: NON_NULL
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /backend-services/v3/api-docs
+  swagger-ui:
+    enabled: false
+
+logging:
+  level:
+    root: info
+    web: debug
+    org:
+      springframework:
+        web:
+          client: debug
+        http:
+          codec: error
+        security:
+          web: debug
+    com:
+      example:
+        backend: debug
