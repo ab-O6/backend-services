@@ -90,14 +90,14 @@ Use the included Maven wrapper — no separate Maven installation required:
 
 The application uses **profile-based configuration**. Each profile has its own `application-<profile>.yaml` under `src/main/resources/`.
 
-For the `ab` profile, the datasource is configured in `application-ab.yaml`:
+Create an `application-local.yaml` file under `src/main/resources/` with your local datasource:
 
 ```yaml
 spring:
   datasource:
-    url: jdbc:postgresql://192.168.64.10/backend_services_ab?sslmode=require&sslfactory=org.postgresql.ssl.NonValidatingFactory
-    username: backend_services_ab
-    password: backend_services_ab
+    url: jdbc:postgresql://localhost:5432/backend_services
+    username: your_username
+    password: your_password
 ```
 
 Update these values to match your PostgreSQL instance.
@@ -137,7 +137,7 @@ The project includes a pre-configured `.vscode/launch.json`:
       "mainClass": "backend.services/com.example.backend.BackendService",
       "projectName": "backend-services",
       "args": "",
-      "vmArgs": "-Dspring.profiles.active=ab",
+      "vmArgs": "-Dspring.profiles.active=local",
       "envFile": "${workspaceFolder}/.env"
     }
   ]
@@ -166,14 +166,14 @@ DB_PASSWORD=your_secret_password
 ### Option 2: Maven Command Line
 
 ```bash
-./mvnw spring-boot:run -Dspring-boot.run.profiles=ab
+./mvnw spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
 ### Option 3: Run the JAR Directly
 
 ```bash
 ./mvnw clean package -DskipTests
-java -Dspring.profiles.active=ab -jar target/backend-services-0.0.1-SNAPSHOT.jar
+java -Dspring.profiles.active=local -jar target/backend-services-0.0.1-SNAPSHOT.jar
 ```
 
 ---
@@ -183,7 +183,7 @@ java -Dspring.profiles.active=ab -jar target/backend-services-0.0.1-SNAPSHOT.jar
 | Profile    | File                        | Description                     |
 |------------|-----------------------------|---------------------------------|
 | _(default)_ | `application.yaml`         | Base config — port `55105`, production-safe defaults |
-| `ab`       | `application-ab.yaml`       | Development profile with debug logging and Swagger API docs |
+| `local`    | `application-local.yaml`    | Local development profile with debug logging and Swagger API docs |
 
 The base `application.yaml` is always loaded. Profile-specific files override/extend it.
 
@@ -231,7 +231,7 @@ plantuml -tsvg target/spring-modulith-docs/*.puml
 
 ## API Documentation
 
-When running with the `ab` profile, OpenAPI docs are available at:
+When running with the `local` profile (or any profile with `springdoc.api-docs.enabled: true`), OpenAPI docs are available at:
 
 - **OpenAPI JSON**: `http://localhost:55105/backend-services/v3/api-docs`
 
