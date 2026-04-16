@@ -1,6 +1,6 @@
 # Backend Service APIs
 
-A modular Spring Boot application built with **Spring Modulith** and the **Java Platform Module System (JPMS)**.
+A modular Spring Boot application built with **Spring Modulith**.
 
 ---
 
@@ -134,7 +134,7 @@ The project includes a pre-configured `.vscode/launch.json`:
       "name": "Backend Services",
       "request": "launch",
       "cwd": "${workspaceFolder}",
-      "mainClass": "backend.services/com.example.backend.BackendService",
+      "mainClass": "com.example.backend.BackendService",
       "projectName": "backend-services",
       "args": "",
       "vmArgs": "-Dspring.profiles.active=local",
@@ -189,16 +189,6 @@ The base `application.yaml` is always loaded. Profile-specific files override/ex
 
 ---
 
-## JPMS Module Structure
-
-This project is a fully modularized JPMS application. The Java module is declared in `src/main/java/module-info.java` as `backend.services`.
-
-Key points:
-- All Spring dependencies are referenced via `requires` directives.
-- Packages containing Spring-managed components are selectively `opens`'d to `spring.core`, `spring.beans`, and `spring.context` for reflection access.
-- The `mainClass` in `launch.json` uses the JPMS format: `backend.services/com.example.backend.BackendService`.
-
----
 
 ## Generating Module Documentation
 
