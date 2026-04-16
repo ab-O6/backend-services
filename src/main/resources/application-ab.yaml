@@ -6,14 +6,10 @@ spring:
   main:
     lazy-initialization: false
     allow-bean-definition-overriding: false
-  datasource:
-    url: jdbc:postgresql://192.168.64.10/backend_services_ab?sslmode=require&sslfactory=org.postgresql.ssl.NonValidatingFactory
-    username: backend_services_ab
-    password: backend_services_ab
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
     properties:
       hibernate:
         '[format_sql]': false

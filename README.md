@@ -157,16 +157,25 @@ The project includes a pre-configured `.vscode/launch.json`:
 "vmArgs": "-Dspring.profiles.active=<your-profile>"
 ```
 
-**To use environment variables**, create a `.env` file in the project root:
+**To use environment variables**, create a `.env` file in the project root containing the following properties:
 
 ```env
-DB_PASSWORD=your_secret_password
+DB_HOST=Hostname or IP address of your PostgreSQL database (e.g., localhost)
+DB_NAME=Name of the PostgreSQL database to connect to
+DB_USERNAME=Database user with required privileges
+DB_PASSWORD=Password for the database user
 ```
 
 ### Option 2: Maven Command Line
 
+To run the application normally:
 ```bash
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=local
+```
+
+To run it and automatically inject properties from your `.env` file (in Bash/Zsh):
+```bash
+set -a && source .env && set +a && ./mvnw spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
 ### Option 3: Run the JAR Directly
