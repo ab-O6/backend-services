@@ -1,6 +1,7 @@
 package com.example.backend.cart.web;
 
 import com.example.backend.cart.domain.dto.AddToCartRequest;
+import com.example.backend.cart.domain.dto.CartDto;
 import com.example.backend.cart.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,5 +21,10 @@ public class CartController {
     @PostMapping("/checkout/{customerId}")
     public Integer checkout(@PathVariable Integer customerId) {
         return cartService.checkout(customerId);
+    }
+
+    @GetMapping("/{customerId}")
+    public CartDto getCart(@PathVariable Integer customerId) {
+        return cartService.getCart(customerId);
     }
 }

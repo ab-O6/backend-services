@@ -49,9 +49,13 @@ Each domain module follows a consistent internal structure:
 
 ## Prerequisites
 
-1. **JDK 25** — Install via [SDKMAN](https://sdkman.io/) or your preferred method:
+1. **JDK 25** — Install Eclipse Temurin via [Homebrew](https://brew.sh/):
    ```bash
-   sdk install java 25-open
+   brew install --cask temurin@25
+   ```
+   *(Optional: To ensure build tools reliably resolve this specific JDK version against your system path, you can securely route your `JAVA_HOME` natively by dropping this inside your `~/.zshrc`):*
+   ```bash
+   export JAVA_HOME=$(/usr/libexec/java_home -v 25)
    ```
 
 2. **PostgreSQL** — A running PostgreSQL instance with a database created for your profile.
@@ -166,7 +170,19 @@ DB_USERNAME=Database user with required privileges
 DB_PASSWORD=Password for the database user
 ```
 
-### Option 2: Maven Command Line
+### Option 2: IntelliJ IDEA (Community & Ultimate)
+
+IntelliJ IDEA natively imports Maven projects. Follow these steps to configure your run environment:
+
+1. Open the project folder in IntelliJ IDEA. The IDE will automatically detect and sync the `pom.xml`.
+2. Locate the main application class: `com.example.backend.BackendService`.
+3. Click the green **Run** icon next to the class name or hit `⌃⇧R` (`Ctrl+Shift+F10`).
+4. To configure environment variables and profiles, open **Edit Configurations** from the run configurations dropdown on the top right toolbar.
+5. In the **Run/Debug Configurations** window under your `BackendService` Application configuration:
+   - **Environment variables**: Use the **Enable EnvFile** plugin option (if installed) to link your `.env`, or manually paste your `DB_*` variables into the environment variables list.
+   - **VM options**: Click **Modify options** -> **Add VM options** and paste `-Dspring.profiles.active=local` (or your preferred profile).
+
+### Option 3: Maven Command Line
 
 To run the application normally:
 ```bash

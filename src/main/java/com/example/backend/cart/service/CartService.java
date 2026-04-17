@@ -10,6 +10,8 @@ import com.example.backend.inventory.api.InventoryApi;
 import com.example.backend.order.api.OrderApi;
 import com.example.backend.order.domain.dto.OrderItemDto;
 import com.example.backend.order.domain.dto.PlaceOrderRequest;
+import com.example.backend.cart.domain.dto.CartDto;
+import com.example.backend.cart.domain.dto.CartItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,5 +74,15 @@ public class CartService {
         cartRepository.save(cart);
 
         return orderId;
+    }
+
+    @Transactional(readOnly = true)
+    public CartDto getCart(Integer customerId) {
+        return cartRepository.findByCustomerId(customerId)
+                .map(cart -> new CartDto(cart.getCustomerId(),
+                        cart.getItems().stream()
+                                .map(item -> new CartItemDto(item.getCatalogueItemId(), item.getQuantity(), item.getPriceSnapshot()))
+                                .collect(Collectors.toList())))
+                .orElse(new CartDto(customerId, List.of()));
     }
 }
