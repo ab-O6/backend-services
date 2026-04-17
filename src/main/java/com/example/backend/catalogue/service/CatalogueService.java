@@ -16,10 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import com.example.backend.catalogue.api.CatalogueApi;
 
 @Service
 @RequiredArgsConstructor
-public class CatalogueService {
+public class CatalogueService implements CatalogueApi {
 
     private final CatalogueItemRepository repository;
     private final ApplicationEventPublisher eventPublisher;
@@ -59,6 +60,7 @@ public class CatalogueService {
         return dto;
     }
 
+    @Override
     @Transactional(readOnly = true)
     public CatalogueItemDto getItem(Integer id) {
         return repository.findById(id)

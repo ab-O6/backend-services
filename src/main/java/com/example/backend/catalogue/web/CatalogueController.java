@@ -1,4 +1,4 @@
-package com.example.backend.catalogue.api;
+package com.example.backend.catalogue.web;
 
 import com.example.backend.catalogue.domain.dto.CatalogueItemDto;
 import com.example.backend.catalogue.domain.dto.CreateCatalogueItemRequest;
